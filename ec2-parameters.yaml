@@ -1,0 +1,43 @@
+Parameters:
+  InstanceTypeParameter:
+    Type: String
+    Default: m1.small
+    AllowedValues:
+      - t2.micro
+      - m1.small
+      - m1.large
+    Description: Enter t2.micro, m1.small, or m1.large. Default is m1.small.
+
+Mappings:
+  AMIRegionMap:
+    us-east-1:
+      AMI: "ami-09cd747c78a9add63"
+    us-east-2:
+      AMI: "ami-0ab0629dba5ae551d"
+
+Resources:
+  SaruEC2Instance3:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: !Ref InstanceTypeParameter
+      ImageId: !FindInMap
+        - AMIRegionMap
+        - !Ref AWS::Region
+        - AMI
+      Tags:
+        - Key: "Name"
+          Value: "thirdInstance"
+      SecurityGroups:
+        - !Ref sarusg1
+  
+  sarusg1:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: allow http traffic
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+
+    

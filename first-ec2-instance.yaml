@@ -1,0 +1,7 @@
+Resources:
+  SaruEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      ImageId: ami-0ab0629dba5ae551d
+

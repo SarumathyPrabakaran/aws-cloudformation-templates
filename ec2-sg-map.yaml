@@ -1,0 +1,33 @@
+Mappings:
+  AMIRegionMap:
+    us-east-1:
+      AMI: "ami-09cd747c78a9add63"
+    us-east-2:
+      AMI: "ami-0ab0629dba5ae551d"
+
+Resources:
+  SaruEC2Instance3:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      ImageId: !FindInMap
+        - AMIRegionMap
+        - !Ref AWS::Region
+        - AMI
+      Tags:
+        - Key: "Name"
+          Value: "thirdInstance"
+      SecurityGroups:
+        - !Ref sarusg1
+  
+  sarusg1:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: allow http traffic
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+
+    

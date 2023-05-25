@@ -1,0 +1,23 @@
+Resources:
+  SaruEC2Instance3:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      ImageId: ami-0ab0629dba5ae551d
+      Tags:
+        - Key: "Name"
+          Value: "thirdInstance"
+      SecurityGroups:
+        - !Ref sarusg1
+  
+  sarusg1:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: allow http traffic
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+
+          
